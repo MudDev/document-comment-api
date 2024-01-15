@@ -1,0 +1,209 @@
+{
+	"info": {
+		"_postman_id": "65230d86-2f1f-4e3c-b0e0-43bf7e460965",
+		"name": "Custodia Document Drafts",
+		"description": "This Postman collection is designed to interact with a Document and Comment Management API. It provides a comprehensive set of requests to manage documents, drafts, comments, and reactions, streamlining the process of document review and collaboration. Each request is crafted to demonstrate the capabilities and use cases of the API, offering an intuitive way to interact with the system.\n\n#### API Endpoints Overview\n\n1. **Add Draft (POST /api/drafts)**\n    - This endpoint allows for the creation of a new draft for a document. Users can submit the draft's name and content, and the system will automatically manage versions.\n2. **Get Most Recent Drafts (GET /api/drafts)**\n    - Retrieve the most recent versions of all drafts. This endpoint supports an optional `limit` parameter to specify the number of recent drafts to fetch.\n3. **Search Drafts (GET /api/drafts/search)**\n    - Offers the functionality to search within draft content. Users can pass a search query, and the API will return drafts containing the specified text.\n4. **Add Comment (POST /api/comments)**\n    \n    - Users can add comments to a specific draft. This endpoint expects details like the draft ID, user ID, and the comment text.\n5. **Get Comments and Reactions (GET /api/drafts/{draftId}/comments)**\n    - Retrieves all comments and their associated reactions for a given draft. This comprehensive view enhances understanding of the feedback and discussions around a draft.\n6. **Add Reaction (POST /api/comment/{commentId}/reaction)**\n    - This endpoint allows users to react to specific comments. Reactions are expressed through emojis, and the API endpoint is structured to receive the comment ID in the URL and the emoji in the request body.\n\n#### Utilization\n\nEach request in this collection is pre-configured with the necessary HTTP methods, headers, URL parameters, and body data (where applicable). Users can easily execute these requests against a running instance of the Document and Comment Management API to test and interact with the system.\n\n#### Testing and Documentation\n\nThe collection also serves as a testing suite to validate the API's functionality. Each request is accompanied by a brief description and example values, providing clarity and context for users exploring the API.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14212742"
+	},
+	"item": [
+		{
+			"name": "Get Recent Drafts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/drafts?limit=0",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"drafts"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "0",
+							"description": "Passing 0 will get all drafts."
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Comments And Reactions",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "draftId",
+							"value": "1",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/api/drafts/comments-reactions?draftId=1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"drafts",
+						"comments-reactions"
+					],
+					"query": [
+						{
+							"key": "draftId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Recent Document Versions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/documents/latest",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"documents",
+						"latest"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Drafts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/drafts/search?text=methods",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"drafts",
+						"search"
+					],
+					"query": [
+						{
+							"key": "text",
+							"value": "methods"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Draft",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"Brilliant Document\",\n    \"content\":\"This is a basic test document to verify the standard functionality of the POST/GET methods.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/drafts",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"drafts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Draft Comment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"DraftId\": 1,\n    \"UserId\": 2,\n    \"Text\": \"This is a comment on the draft.\",\n    \"ParentCommentId\": null\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/comments",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Comment Reaction",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 1,\n    \"userId\": 3,\n    \"emoji\": \"👍\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/comment/1/reaction",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"comment",
+						"1",
+						"reaction"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
